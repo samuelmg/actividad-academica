@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlumnoController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -10,6 +11,12 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::post('alumno/{alumno}/inscribir', [AlumnoController::class, 'inscribirAlumno'])
+    ->name('alumno.inscribir')
+    ->middleware(['auth']);
+
+Route::resource('alumno', AlumnoController::class)->middleware(['auth']);
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

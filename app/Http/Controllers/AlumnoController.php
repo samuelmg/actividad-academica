@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Http\Requests\StoreAlumnoRequest;
 use App\Http\Requests\UpdateAlumnoRequest;
+use App\Models\Seccion;
+use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
 {
@@ -37,7 +39,8 @@ class AlumnoController extends Controller
      */
     public function show(Alumno $alumno)
     {
-        //
+        $secciones = Seccion::all();
+        return view('alumnos.alumno-show', compact('alumno', 'secciones'));
     }
 
     /**
@@ -62,5 +65,11 @@ class AlumnoController extends Controller
     public function destroy(Alumno $alumno)
     {
         //
+    }
+
+    public function inscribirAlumno(Request $request, Alumno $alumno)
+    {
+        $alumno->secciones()->attach($request->seccion_id);
+        return redirect()->route('alumno.show', $alumno);
     }
 }
