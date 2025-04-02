@@ -67,9 +67,15 @@ class AlumnoController extends Controller
         //
     }
 
-    public function inscribirAlumno(Request $request, Alumno $alumno)
+    public function actualizarSeccionesAlumno(Request $request, Alumno $alumno)
     {
-        $alumno->secciones()->attach($request->seccion_id);
+        $alumno->secciones()->sync($request->seccion_id);
         return redirect()->route('alumno.show', $alumno);
     }
+
+    // public function desinscribirAlumno(Request $request, Alumno $alumno)
+    // {
+    //     $alumno->secciones()->detach($request->seccion_id);
+    //     return redirect()->route('alumno.show', $alumno);
+    // }
 }

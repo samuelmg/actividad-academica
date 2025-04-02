@@ -12,8 +12,8 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::post('alumno/{alumno}/inscribir', [AlumnoController::class, 'inscribirAlumno'])
-    ->name('alumno.inscribir')
+Route::post('alumno/{alumno}/actualizar-secciones', [AlumnoController::class, 'actualizarSeccionesAlumno'])
+    ->name('alumno.actualizar-secciones')
     ->middleware(['auth']);
 
 Route::resource('alumno', AlumnoController::class)->middleware(['auth']);

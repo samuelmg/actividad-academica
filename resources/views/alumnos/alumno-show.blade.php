@@ -19,11 +19,13 @@
 
             <hr>
             <h2>Inscribir a Sección</h2>
-            <form action="{{ route('alumno.inscribir', $alumno) }}" method="POST">
+            <form action="{{ route('alumno.actualizar-secciones', $alumno) }}" method="POST">
                 @csrf
-                <select name="seccion_id" id="seccion_id">
+                <select name="seccion_id[]" id="seccion_id" multiple>
                     @foreach ($secciones as $seccion)
-                        <option value="{{ $seccion->id }}">{{ $seccion->nombre }} - {{ $seccion->seccion }}</option>
+                        <option value="{{ $seccion->id }}" @selected(array_search($seccion->id, $alumno->secciones->pluck('id')->toArray()) !== false)>
+                            {{ $seccion->nombre }} - {{ $seccion->seccion }}
+                        </option>
                     @endforeach
                 </select>
                 <br>
