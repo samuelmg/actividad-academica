@@ -16,7 +16,12 @@
 
                 @foreach ($alumnos as $alumno)
                     <tr>
-                        <td><a href="{{ route('alumno.show', $alumno) }}">{{ $alumno->nombre }}</a></td>
+                        <td>
+                            {{ $alumno->nombre }}
+                            @can('view', $alumno)
+                                <a href="{{ route('alumno.show', $alumno) }}">Ver info</a>
+                            @endcan
+                        </td>
                         <td>{{ $alumno->correo }}</td>
                         <td>
                             @foreach ($alumno->secciones as $seccion)

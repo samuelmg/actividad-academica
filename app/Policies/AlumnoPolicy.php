@@ -13,7 +13,7 @@ class AlumnoPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->email == 'samuel@test.com';
     }
 
     /**
@@ -21,7 +21,7 @@ class AlumnoPolicy
      */
     public function view(User $user, Alumno $alumno): bool
     {
-        return false;
+        return $alumno->correo == 'jewell16@example.com';
     }
 
     /**

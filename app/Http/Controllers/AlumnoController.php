@@ -18,6 +18,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Alumno::class);
+
         return view('alumnos.alumno-index', [
             'alumnos' => Alumno::all(),
         ]);
@@ -44,6 +46,8 @@ class AlumnoController extends Controller
      */
     public function show(Alumno $alumno)
     {
+        Gate::authorize('view', $alumno);
+        
         $secciones = Seccion::all();
         return view('alumnos.alumno-show', compact('alumno', 'secciones'));
     }
