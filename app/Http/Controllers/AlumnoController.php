@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Http\Requests\StoreAlumnoRequest;
 use App\Http\Requests\UpdateAlumnoRequest;
+use App\Mail\SeccionAsignada;
 use App\Models\Seccion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AlumnoController extends Controller
 {
@@ -72,6 +74,13 @@ class AlumnoController extends Controller
     public function actualizarSeccionesAlumno(Request $request, Alumno $alumno)
     {
         $alumno->secciones()->sync($request->seccion_id);
+
+        $secciones = Seccion::whereIn('id', $request->seccion_id)->get();
+
+        Mail::to($alumno->correo)
+            ->send(new SeccionAsignada($alumno, $secciones));
+        // sleep(2); // Pausa de 2 segundos entre envíos
+
         return redirect()->route('alumno.show', $alumno);
     }
 

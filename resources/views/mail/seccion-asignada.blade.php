@@ -1,12 +1,16 @@
 <x-mail::message>
-# Introduction
+# Hola {{ $alumno->nombre }}
 
-The body of your message.
+Se te han asignado las secciones:
 
-<x-mail::button :url="''">
-Button Text
+@foreach ($secciones as $seccion)
+- **{{ $seccion->nombre }}**
+@endforeach
+
+<x-mail::button :url="route('alumno.show', $alumno->id)">
+Ver mi perfil
 </x-mail::button>
 
-Thanks,<br>
+Saludos,<br>
 {{ config('app.name') }}
 </x-mail::message>
