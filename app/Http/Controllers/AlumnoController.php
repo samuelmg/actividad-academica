@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAlumnoRequest;
 use App\Mail\SeccionAsignada;
 use App\Models\Seccion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class AlumnoController extends Controller
@@ -17,6 +18,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Alumno::class);
+
         return view('alumnos.alumno-index', [
             'alumnos' => Alumno::all(),
         ]);
@@ -43,6 +46,8 @@ class AlumnoController extends Controller
      */
     public function show(Alumno $alumno)
     {
+        Gate::authorize('view', $alumno);
+        
         $secciones = Seccion::all();
         return view('alumnos.alumno-show', compact('alumno', 'secciones'));
     }
@@ -73,6 +78,8 @@ class AlumnoController extends Controller
 
     public function actualizarSeccionesAlumno(Request $request, Alumno $alumno)
     {
+        Gate::authorize('asignar-seccion');
+
         $alumno->secciones()->sync($request->seccion_id);
 
         $secciones = Seccion::whereIn('id', $request->seccion_id)->get();
